@@ -44,7 +44,7 @@ export default function HomePage() {
         <Route path="/" element={roomCode ? <Navigate to={`/room/${roomCode}`} /> : renderHomePage()} />
         <Route path="/join" element={<RoomJoin />} />
         <Route path="/create" element={<CreateRoom />} />
-        <Route path="/room/:roomCode" element={<Room />} />
+        <Route path="/room/:roomCode" element={<Room  />} />
       </Routes>
     </Router>
   );
