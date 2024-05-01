@@ -151,7 +151,7 @@ const CreateRoom = (props) => {
             required={true} 
             type="number" 
             variant="outlined"
-            defaultValue={props.votesToSkip}
+            defaultValue={defaultProps.votesToSkip}
             onChange={handelVotesChange}
             inputProps={{
               min: 1,
