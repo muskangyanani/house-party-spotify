@@ -9,13 +9,13 @@ const Room = () => {
   const [guestCanPause, setGuestCanPause] = useState(true);
   const [isHost, setIsHost] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [spotifyAuthenticated, setSpotifyAuthenticated] = useState(false);
 
   // TODO: redirect to home page if we are joined in a room that does not exist or been deleted by the host
   const getRoomDetails = () => {
     fetch('/api/get-room' + '?code=' + roomCode)
     .then((response) => {
       if (!response.ok) {
-        
         window.location.href = '/';
       }
       return response.json();
@@ -24,7 +24,27 @@ const Room = () => {
       setVotesToSkip(data.votes_to_skip);
       setGuestCanPause(data.guest_can_pause);
       setIsHost(data.is_host);
-    })
+      console.log(data);
+      if (data.is_host){
+        authenticateSpotify();
+      }
+    });
+  }
+
+  const authenticateSpotify = () => {
+    fetch("/spotify/is-authenticated")
+      .then((response) => response.json())
+      .then((data) => {
+        setSpotifyAuthenticated(data.status)
+        console.log(data.status);
+        if (!data.status) {
+          fetch("/spotify/get-auth-url")
+            .then((response) => response.json())
+            .then((data) => {
+              window.location.replace(data.url);
+            });
+        }
+      });
   }
 
   const handleLeaveRoom = () => {
