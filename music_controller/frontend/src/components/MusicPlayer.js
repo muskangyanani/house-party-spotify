@@ -6,7 +6,6 @@ const MusicPlayer = (props) => {
 
   const songProgress = (props.time/ props.duration) * 100
 
-
   // This play and pause feature is only for Premium accounts...not for poor peoples
   const playSong = () => {
     const requestOptions = {
@@ -30,6 +29,28 @@ const MusicPlayer = (props) => {
       })
   }
 
+  const skipSong = () => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    }
+    fetch('/spotify/skip', requestOptions)
+      .then((response)=>{
+        console.log("skip button pressed")
+      })
+  }
+
+  const previousSong = () => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    }
+    fetch('/spotify/previous', requestOptions)
+      .then((response)=>{
+        console.log("previous button pressed")
+      })
+  }
+
   return (
     <Card>
       <Grid container alignItems="center">
@@ -40,15 +61,15 @@ const MusicPlayer = (props) => {
           <Typography variant="h5" component="h5">{props.title}</Typography>
           <Typography color="secondary" variant="subtitle1">{props.artist}</Typography>
           <div>
-            <IconButton>
+            <IconButton onClick={()=>{previousSong()}}>
               <SkipPrevious />
             </IconButton>
             <IconButton
-              onClick={props.is_playing ? pauseSong : playSong}
+              onClick={() => {props.is_playing ? pauseSong() : playSong()}}
             >
                 {props.is_playing ? <Pause /> : <PlayArrow />}
               </IconButton>
-            <IconButton>
+            <IconButton onClick={()=>{skipSong()}}>
               <SkipNext />
             </IconButton>
           </div>
