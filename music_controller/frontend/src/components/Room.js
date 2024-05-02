@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Button, Grid, Typography } from '@mui/material';
 import CreateRoom from './CreateRoom';
+import MusicPlayer from './MusicPlayer';
 
 const Room = () => {
   const { roomCode } = useParams();
@@ -130,18 +131,8 @@ const Room = () => {
             Code: {roomCode}
           </Typography>
         </Grid>
-        {/* Inside the return statement of your component */}
-        {song.title && (
-          <Grid item xs={12} align="center">
-            <Typography variant="h6">{song.title}</Typography>
-          </Grid>
-        )}
-        {song.artist && (
-          <Grid item xs={12} align="center">
-            <Typography variant="subtitle1">{song.artist}</Typography>
-          </Grid>
-        )}
-
+        <br />
+        <MusicPlayer {...song} />
         {isHost ? rederSettingsButton() : null}
         <Grid item xs={12} align="center">
           <Button 
