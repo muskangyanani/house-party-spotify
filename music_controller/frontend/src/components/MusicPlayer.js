@@ -2,10 +2,33 @@ import React from 'react'
 import { Grid, Typography, Card, IconButton, LinearProgress } from '@mui/material'
 import { PlayArrow, SkipNext, SkipPrevious, Pause } from '@mui/icons-material'
 
-
 const MusicPlayer = (props) => {
 
   const songProgress = (props.time/ props.duration) * 100
+
+
+  // This play and pause feature is only for Premium accounts...not for poor peoples
+  const playSong = () => {
+    const requestOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+    }
+    fetch('/spotify/play', requestOptions)
+      .then((response)=>{
+        console.log("play button pressed")
+      })
+  }
+
+  const pauseSong = () => {
+    const requestOptions = {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+    }
+    fetch('/spotify/pause', requestOptions)
+      .then((response)=>{
+        console.log("pause button pressed")
+      })
+  }
 
   return (
     <Card>
@@ -20,9 +43,11 @@ const MusicPlayer = (props) => {
             <IconButton>
               <SkipPrevious />
             </IconButton>
-            <IconButton>
-              {props.is_playing ? <Pause /> : <PlayArrow />}
-            </IconButton>
+            <IconButton
+              onClick={props.is_playing ? pauseSong : playSong}
+            >
+                {props.is_playing ? <Pause /> : <PlayArrow />}
+              </IconButton>
             <IconButton>
               <SkipNext />
             </IconButton>

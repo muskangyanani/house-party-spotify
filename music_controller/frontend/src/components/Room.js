@@ -131,8 +131,7 @@ const Room = () => {
             Code: {roomCode}
           </Typography>
         </Grid>
-        <br />
-        <MusicPlayer {...song} />
+        <MusicPlayer {...song}/>
         {isHost ? rederSettingsButton() : null}
         <Grid item xs={12} align="center">
           <Button 
