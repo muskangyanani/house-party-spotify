@@ -63,10 +63,10 @@ def refresh_spotify_token(session_id):
     update_or_create_user_tokens(session_id, access_token, token_type, expires_in, refresh_token)
 
 def exicute_spotify_api_request(session_id, endpoint, post_=False, put_=False):
-    print("exicute_spotify_api_request")
+    # print("exicute_spotify_api_request")
     tokens = get_user_tokens(session_id)
     print("tokens from exicute_spotify_api_request: ", tokens)
-    print("access_token from exicute_spotify_api_request: ", tokens.access_token)
+    # print("access_token from exicute_spotify_api_request: ", tokens.access_token)
     headers = {
         "Content-Type": "application/json",
         "Authorization": "Bearer " + tokens.access_token
@@ -76,7 +76,7 @@ def exicute_spotify_api_request(session_id, endpoint, post_=False, put_=False):
     if put_:
         put(BASE_URL + endpoint, headers=headers)
     response = get(BASE_URL + endpoint, headers=headers)
-    print("response from exicute_spotify_api_request: ", response)
+    # print("response from exicute_spotify_api_request: ", response)
     try:
         return response.json()
     except:

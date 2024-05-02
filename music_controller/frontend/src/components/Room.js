@@ -10,6 +10,7 @@ const Room = () => {
   const [isHost, setIsHost] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [spotifyAuthenticated, setSpotifyAuthenticated] = useState(false);
+  const [song, setSong] = useState({});
 
   // TODO: redirect to home page if we are joined in a room that does not exist or been deleted by the host
   const getRoomDetails = () => {
@@ -96,8 +97,27 @@ const Room = () => {
     );
   }
 
+  const getCurrentSong = () => {
+    fetch('/spotify/current-song')
+    .then((response) => {
+      if (!response.ok){
+        return {};
+      }else{
+        return response.json();
+      }
+    })
+    .then((data) => {
+      setSong(data);
+      console.log(data);
+    });
+  }
+
   useEffect(() => {
     getRoomDetails();
+    const interval = setInterval(() => {
+      getCurrentSong();
+    }, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   if (showSettings) {
@@ -110,21 +130,18 @@ const Room = () => {
             Code: {roomCode}
           </Typography>
         </Grid>
-        <Grid item xs={12} align="center">
-          <Typography variant="h6" component="h6">
-            Votes: {votesToSkip}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} align="center">
-          <Typography variant="h6" component="h6">
-            Guest Can Pause: {guestCanPause.toString()}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} align="center">
-          <Typography variant="h6" component="h6">
-            Host: {isHost.toString()}
-          </Typography>
-        </Grid>
+        {/* Inside the return statement of your component */}
+        {song.title && (
+          <Grid item xs={12} align="center">
+            <Typography variant="h6">{song.title}</Typography>
+          </Grid>
+        )}
+        {song.artist && (
+          <Grid item xs={12} align="center">
+            <Typography variant="subtitle1">{song.artist}</Typography>
+          </Grid>
+        )}
+
         {isHost ? rederSettingsButton() : null}
         <Grid item xs={12} align="center">
           <Button 
