@@ -29,6 +29,7 @@ const Room = () => {
         authenticateSpotify();
       }
     });
+    console.log({spotifyAuthenticated})
   }
 
   const authenticateSpotify = () => {
@@ -36,7 +37,7 @@ const Room = () => {
       .then((response) => response.json())
       .then((data) => {
         setSpotifyAuthenticated(data.status)
-        console.log(data.status);
+        console.log("setSoptifyAuthenticated data:", data.status);
         if (!data.status) {
           fetch("/spotify/get-auth-url")
             .then((response) => response.json())
