@@ -1,2 +1,3 @@
 env/
 music_controller/db.sqlite3
+spotify_controller/credentials.py
