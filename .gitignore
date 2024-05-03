@@ -1,3 +1,4 @@
 env/
 music_controller/db.sqlite3
-spotify_controller/credentials.py
+# include credentials file
+music_controller/spotify/credentials.py
